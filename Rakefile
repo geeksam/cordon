@@ -11,28 +11,38 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "cordon"
   gem.homepage = "http://github.com/geeksam/cordon"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Cordon Sanitaire: hygienic handling of infectious methods}
+  gem.description = %Q{A bit of an experiment, really}
   gem.email = "geeksam@gmail.com"
   gem.authors = ["Sam Livingston-Gray"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
+
+
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+namespace :test do
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/unit/*_test.rb'
+    test.verbose = true
+  end
+
+  desc 'Run all integration tests'
+  task :integration => ['test:rspec']
+
 end
 
-task :default => :test
+
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
