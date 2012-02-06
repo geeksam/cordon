@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "cordon"
   gem.homepage = "http://github.com/geeksam/cordon"
-  gem.license = "MIT"
+  gem.license = "WTFPL"
   gem.summary = %Q{Cordon Sanitaire: hygienic handling of infectious methods}
   gem.description = %Q{A bit of an experiment, really}
   gem.email = "geeksam@gmail.com"
