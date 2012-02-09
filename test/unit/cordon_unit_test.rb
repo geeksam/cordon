@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), *%w[.. helper])
+require File.join(File.dirname(__FILE__), 'unit_helper')
 
 module Kernel
   ExpectationMethodCallReachedKernel = Class.new(Exception)
@@ -45,19 +45,5 @@ class CordonUnitTest < Test::Unit::TestCase
 
   def test_allows_explicit_calls_to__should_not
     assert_raises(ExpectationMethodCallReachedKernel) { assert_that(Object.new).should_not }
-  end
-end
-
-class CordonPlumbingTest < Test::Unit::TestCase
-  def setup
-    Cordon.refuse :totally_bogus_method
-  end
-  def teardown
-    Cordon.permit :totally_bogus_method
-  end
-
-  def test_assertion_wrapper_responds_to_all_protected_methods
-    wrapper = Cordon::AssertionProxy.new(Object.new)
-    assert wrapper.respond_to?(:totally_bogus_method)
   end
 end

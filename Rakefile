@@ -30,18 +30,25 @@ Jeweler::RubygemsDotOrgTasks.new
 
 
 require 'rake/testtask'
+require 'rspec/core/rake_task'
 namespace :test do
-  Rake::TestTask.new(:unit) do |test|
-    test.libs << 'lib' << 'test'
-    test.pattern = 'test/unit/*_test.rb'
-    test.verbose = true
+  task :all => ['test:unit', 'test:rspec']
+
+  Rake::TestTask.new(:unit) do |t|
+    t.libs << 'lib' << 'test'
+    t.pattern = 'test/unit/*_test.rb'
+    t.verbose = true
   end
 
   desc 'Run all integration tests'
   task :integration => ['test:rspec']
 
+  RSpec::Core::RakeTask.new(:rspec) do |t|
+    t.pattern = 'test/integration/rspec_spec.rb'
+    t.verbose = true
+  end
 end
-
+task :default => ['test:all']
 
 
 require 'rdoc/task'
