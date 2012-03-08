@@ -24,6 +24,8 @@ Jeweler::Tasks.new do |gem|
   gem.email = "geeksam@gmail.com"
   gem.authors = ["Sam Livingston-Gray"]
   # dependencies defined in Gemfile
+
+  gem.files.exclude *%w[ .document .rvmrc Gemfile Gemfile.lock]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
