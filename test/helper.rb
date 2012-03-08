@@ -8,5 +8,7 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+require 'ruby-debug'
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'cordon'
