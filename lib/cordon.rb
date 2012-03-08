@@ -46,12 +46,13 @@ module Cordon
     # Declare specific methods as off-limits
     def blacklist(subject, methods)
       methods.each do |method|
+        method = method.to_sym
         next unless Blacklist[subject][method].nil?  # be idempotent
 
         # Unbind the original method, and replace it with a wrapper that
         # checks for permission before binding and calling the original
-        return unless unbind_method(subject, method.to_sym)
-        replace_method_with_permissions_checking_wrapper(subject, method.to_sym)
+        return unless unbind_method(subject, method)
+        replace_method_with_permissions_checking_wrapper(subject, method)
       end
     end
 
