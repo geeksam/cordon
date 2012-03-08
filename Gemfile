@@ -11,6 +11,8 @@ group :development, :test do
   gem 'jeweler', '~> 1.8.3'
   gem 'mocha', '~> 0.10.3'
 
+  gem 'ruby-debug19'
+
   # Target libraries
   gem 'rspec'
 end
