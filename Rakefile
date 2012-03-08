@@ -32,10 +32,11 @@ Jeweler::RubygemsDotOrgTasks.new
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 namespace :test do
-  task :all => ['test:unit', 'test:rspec']
+  desc 'Run all tests'
+  task :all => ['test:unit', 'test:integration']
 
+  desc 'Run unit tests'
   Rake::TestTask.new(:unit) do |t|
-    t.libs << 'lib' << 'test'
     t.pattern = 'test/unit/*_test.rb'
     t.verbose = true
   end
