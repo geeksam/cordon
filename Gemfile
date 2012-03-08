@@ -15,4 +15,5 @@ group :development, :test do
 
   # Target libraries
   gem 'rspec'
+  gem 'minitest'
 end

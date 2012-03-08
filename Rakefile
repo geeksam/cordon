@@ -42,10 +42,15 @@ namespace :test do
   end
 
   desc 'Run all integration tests'
-  task :integration => ['test:rspec']
+  task :integration => ['test:rspec', 'test:minitest_spec']
 
   RSpec::Core::RakeTask.new(:rspec) do |t|
     t.pattern = 'test/integration/rspec_spec.rb'
+    t.verbose = true
+  end
+
+  Rake::TestTask.new(:minitest_spec) do |t|
+    t.pattern = 'test/integration/minitest_spec_spec.rb'
     t.verbose = true
   end
 end

@@ -38,6 +38,9 @@ module Cordon
       case framework
       when :rspec
         blacklist Kernel, [:should, :should_not]
+      when :minitest_spec
+        must_and_wont = MiniTest::Expectations.instance_methods.map(&:to_s).select {|e| e =~ /^(must|wont)_/}
+        blacklist MiniTest::Expectations, must_and_wont
       else
         raise "I don't know how to embargo #{framework}!"
       end
