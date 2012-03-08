@@ -10,6 +10,6 @@ describe "RSpec integration" do
 
   it 'explodes if you use standard^H^H evil RSpec idiom' do
     naughty = lambda { 42.should == 6*9 }
-    assert_that(naughty).should raise_error(Cordon::ExpectationIncursion)
+    assert_that(naughty).should raise_error(Cordon::Violation)
   end
 end

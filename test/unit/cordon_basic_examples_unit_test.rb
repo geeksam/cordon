@@ -1,33 +1,18 @@
 require File.join(File.dirname(__FILE__), 'unit_helper')
 
 module Kernel
-  VerbotenMethodCallReachedKernel = Class.new(Exception)
-  def verboten_method(*_)
+  def verboten_method
     raise VerbotenMethodCallReachedKernel
   end
 end
 
+# You can tell Cordon to blacklist certain methods on all objects.
+Cordon.blacklist Kernel, [:verboten_method]
 
-# By default, Cordon does nothing!
-class CordonDefaultBehaviorUnitTest < Test::Unit::TestCase
-  def test_allows_calls_to__verboten_method
-    assert_raises(VerbotenMethodCallReachedKernel) { Object.new.verboten_method }
-  end
-end
-
-# You can tell Cordon to refuse certain methods on all objects.
-class CordonUnitTest < Test::Unit::TestCase
-  def setup
-    Cordon.refuse Kernel, [:verboten_method]
-  end
-
-  def foo
-    @foo ||= Object.new
-  end
-
-  # Calling #verboten_method on a random object will raise an exception...
+class CordonBasicExamples < CordonUnitTest
+  # Calling #verboten_method on an object will raise an exception...
   def test_raises_exception_when_calling__verboten_method
-    assert_raise(Cordon::CordonViolation) do
+    assert_raise(Cordon::Violation) do
       foo.verboten_method
     end
   end
@@ -41,7 +26,7 @@ class CordonUnitTest < Test::Unit::TestCase
 
   # ...every time!
   def test_permission_provided_by_assert_that_only_works_once
-    assert_raise(Cordon::CordonViolation) do
+    assert_raise(Cordon::Violation) do
       begin
         assert_that(foo).verboten_method
       rescue VerbotenMethodCallReachedKernel
@@ -51,3 +36,4 @@ class CordonUnitTest < Test::Unit::TestCase
     end
   end
 end
+
