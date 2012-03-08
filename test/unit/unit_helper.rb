@@ -10,4 +10,8 @@ class CordonUnitTest < Test::Unit::TestCase
   def foo
     @foo ||= Object.new
   end
+
+  def refute(predicate, *other_args)
+    assert !predicate, *other_args
+  end
 end

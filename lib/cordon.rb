@@ -9,9 +9,15 @@ class Object
 end
 
 module Cordon
-  Violation = Class.new(Exception)
   Blacklist = Hash.new { |hash, key| hash[key] = Hash.new }
   ObjectsPermittedOneCallToAnyBlacklistedMethod = []
+  class Violation < Exception
+    def backtrace
+      bt = super
+      bt.shift while bt && bt.first =~ /cordon\.rb\:\d+\:in/
+      bt
+    end
+  end
 
   module Sanitaire
     def assert_that(predicate)
