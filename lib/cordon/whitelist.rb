@@ -6,8 +6,11 @@ module Cordon
       TheList << object
     end
 
-    def self.permitted?(object)
-      !! TheList.delete(object)
+    def self.check_permissions(instance, subject, method, *args)
+      allowed = !! TheList.delete(instance)
+      return if allowed
+      message = '%s#%s(%s)' % [subject, method, args.map(&:inspect).join(', ')]
+      raise ::Cordon::Violation, message
     end
   end
 end

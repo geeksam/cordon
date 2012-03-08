@@ -8,16 +8,8 @@ module Cordon
   protected
 
     def __cordon__call_method__(subject, method, *args, &b)
-      __cordon__check_permission__(subject, method, *args)
-      um = ::Cordon::Blacklist.unbound_method(subject, method)
-      um.bind(self).call(*args, &b)
-    end
-
-    def __cordon__check_permission__(subject, method, *args)
-      unless ::Cordon::Whitelist.permitted?(self)
-        message = '%s#%s(%s)' % [subject, method, args.map(&:inspect).join(', ')]
-        raise ::Cordon::Violation, message
-      end
+      ::Cordon::Whitelist.check_permissions(self, subject, method, *args)
+      ::Cordon::Blacklist.invoke_method(self, subject, method, *args, &b)
     end
   end
 end
