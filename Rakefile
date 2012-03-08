@@ -66,3 +66,22 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+
+desc 'Quick and dirty SLOC counts'
+task :stats do
+  sloc_count = lambda do |glob_expression|
+    glob_expression = File.join(File.dirname(__FILE__), glob_expression)
+    lines_in_file = lambda { |filename| File.open(filename, 'r').readlines.reject { |line| line =~ /^\s*(#|$)/ }.length }
+    n = Dir.glob(glob_expression).inject(0) { |n, f| n + lines_in_file[f] }
+    n.to_f
+  end
+  lib  = sloc_count['lib/**/*.rb']
+  test = sloc_count['test/**/*_{test,spec}.rb']
+  puts <<-EOF
+    Cordon code stats
+    Lib LOC:  #{ '%3d' % lib }
+    Test LOC: #{ '%3d' % test }
+    Lib/test: #{ '%.1f' % (lib/test) }
+EOF
+end
