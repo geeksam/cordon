@@ -9,7 +9,11 @@ describe "RSpec integration" do
   end
 
   it 'explodes if you use standard^H^H evil RSpec idiom' do
-    naughty = lambda { 42.should == 6*9 }
-    assert_that(naughty).should raise_error(Cordon::Violation)
+    begin
+      42.should == 6*9
+      raise "This line should not be executed"
+    rescue Cordon::Violation
+      # all is well; carry on
+    end
   end
 end
