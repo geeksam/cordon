@@ -47,7 +47,7 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
 - Write integration macros (and tests, obviously) for various spec frameworks:
   - <s>RSpec</s>
   - <s>MiniTest::Spec</s>
-  - Yoda
+  - <s>Yoda</s> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em>
   - ?
 - Add a declarative API to customize the name of the function that wraps assertions
 - probably some other stuff I can't think of at the moment
