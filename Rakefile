@@ -35,7 +35,7 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 namespace :test do
   desc 'Run all tests'
-  task :all => ['test:unit', 'test:integration']
+  task :all => ['test:unit', 'test:framework_integration']
 
   desc 'Run unit tests'
   Rake::TestTask.new(:unit) do |t|
@@ -43,18 +43,21 @@ namespace :test do
     t.verbose = true
   end
 
-  desc 'Run all integration tests'
-  task :integration => ['test:rspec', 'test:minitest_spec']
+  desc 'Run all framework integration tests'
+  task :framework_integration => ['test:framework:rspec', 'test:framework:minitest_spec']
 
-  RSpec::Core::RakeTask.new(:rspec) do |t|
-    t.pattern = 'test/integration/rspec_spec.rb'
-    t.verbose = true
+  namespace :framework do
+    RSpec::Core::RakeTask.new(:rspec) do |t|
+      t.pattern = 'test/framework_integration/rspec_spec.rb'
+      t.verbose = true
+    end
+
+    Rake::TestTask.new(:minitest_spec) do |t|
+      t.pattern = 'test/framework_integration/minitest_spec_spec.rb'
+      t.verbose = true
+    end
   end
 
-  Rake::TestTask.new(:minitest_spec) do |t|
-    t.pattern = 'test/integration/minitest_spec_spec.rb'
-    t.verbose = true
-  end
 end
 task :default => ['test:all']
 
