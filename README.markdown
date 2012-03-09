@@ -44,13 +44,21 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
 
 ## TODO
 
-- Write integration macros (and tests, obviously) for various spec frameworks:
-  - <s>RSpec</s>
-  - <s>MiniTest::Spec</s>
-  - <s>Yoda</s> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em>
-  - ?
-- <s>Add a declarative API to customize the name of the function that wraps assertions</s>
-- probably some other stuff I can't think of at the moment
+<!-- Apparently Markdown and HTML don't mix, because "* <s>foo</s>" doesn't work the way I thought it should -->
+<ul>
+  <li>
+    Write integration macros (and tests, obviously) for various spec frameworks:
+    <ul>
+      <li><s>RSpec</s></li>
+      <li><s>MiniTest::Spec</s></li>
+      <li><s>Yoda</s> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em></li>
+      <li>?</li>
+    </ul>
+  </li>
+  <li><s>Add a declarative API to customize the name of the function that wraps assertions</s></li>
+  <li>RDoc</li>
+  <li>probably some other stuff I can't think of at the moment</li>
+</ul>
 
 
 
@@ -68,5 +76,4 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
 
 ## Copyright
 
-Copyright (c) 2012 Sam Livingston-Gray. See LICENSE.txt for
-further details.
+Copyright (c) 2012 Sam Livingston-Gray. See LICENSE.txt for further details.
