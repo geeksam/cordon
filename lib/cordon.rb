@@ -20,7 +20,6 @@ module Kernel
     define_method(method) do |*args, &b|
       subject = __cordon__receiver__
       __cordon__call_method__(subject, method, *args, &b)
-      #                       ^^^^^^^^^^^^^^^ TODO: address Data Clump code smell?
     end
   end
 end
