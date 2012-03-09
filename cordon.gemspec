@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cordon}
-  s.version = "0.2.0"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Sam Livingston-Gray}]
-  s.date = %q{2012-03-08}
+  s.date = %q{2012-03-09}
   s.description = %q{A bit of an experiment, really}
   s.email = %q{geeksam@gmail.com}
   s.extra_rdoc_files = [
@@ -27,14 +27,15 @@ Gem::Specification.new do |s|
     "lib/cordon/sanitaire.rb",
     "lib/cordon/violation.rb",
     "lib/cordon/whitelist.rb",
+    "test/framework_integration/minitest_spec_spec.rb",
+    "test/framework_integration/rspec_spec.rb",
     "test/helper.rb",
-    "test/integration/minitest_spec_spec.rb",
-    "test/integration/rspec_spec.rb",
-    "test/unit/backtrace_cleaning_unit_test.rb",
-    "test/unit/cordon_basic_examples_unit_test.rb",
-    "test/unit/cordon_default_behavior_unit_test.rb",
-    "test/unit/cordon_edge_cases_unit_test.rb",
-    "test/unit/unit_helper.rb"
+    "test/integration/backtrace_cleaning_test.rb",
+    "test/integration/cordon_basic_examples_test.rb",
+    "test/integration/cordon_customization_test.rb",
+    "test/integration/cordon_default_behavior_test.rb",
+    "test/integration/cordon_edge_cases_test.rb",
+    "test/integration/integration_test_helper.rb"
   ]
   s.homepage = %q{http://github.com/geeksam/cordon}
   s.licenses = [%q{WTFPL}]
