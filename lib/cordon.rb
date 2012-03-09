@@ -45,4 +45,8 @@ module Cordon
       raise "I don't know how to embargo #{framework}!"
     end
   end
+
+  def self.wrap_assertions_with(custom_method_name)
+    Sanitaire.wrap_assertions_with(custom_method_name)
+  end
 end

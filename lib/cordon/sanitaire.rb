@@ -1,9 +1,15 @@
 module Cordon
   module Sanitaire
-    def assert_that(predicate)
+
+    def __cordon__assertion_wrapper__(predicate)
       ::Cordon::Whitelist.admit_one(predicate)
       return predicate
     end
+
+    def self.wrap_assertions_with(custom_method_name)
+      alias_method custom_method_name, :__cordon__assertion_wrapper__
+    end
+    wrap_assertions_with :assert_that
 
   protected
 
