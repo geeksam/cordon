@@ -11,7 +11,7 @@ From Wikipedia:
 
 I've never been a big fan of the way RSpec adds <code>#should</code> and <code>#should_not</code> to Kernel, but until recently I'd never been able to articulate why.  Then I worked on a project that became <a href="https://github.com/geeksam/kookaburra/">Kookaburra</a>, and I found a specific reason to be annoyed.
 
-Basically, putting <code>#should</code> on all objects gives you the freedom to <s>shoot yourself in the foot</s> put RSpec expectations *anywhere*, not just inside an <code>#it</code> block.  So, I went looking for a way to make <code>#should</code> explode if it was called outside a specific context.
+Basically, putting <code>#should</code> on all objects gives you the freedom to <strike>shoot yourself in the foot</strike> put RSpec expectations *anywhere*, not just inside an <code>#it</code> block.  So, I went looking for a way to make <code>#should</code> explode if it was called outside a specific context.
 
 After several false starts and horrible ideas, I've got something that actually isn't too bad.
 
@@ -44,19 +44,21 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
 
 ## TODO
 
-<!-- Apparently Markdown and HTML don't mix, because "* <s>foo</s>" doesn't work the way I thought it should -->
+<!-- Apparently Markdown and HTML don't mix, because "* <strike>foo</strike>" doesn't work the way I thought it should -->
 <ul>
   <li>
     Write integration macros (and tests, obviously) for various spec frameworks:
     <ul>
-      <li><s>RSpec</s></li>
-      <li><s>MiniTest::Spec</s></li>
-      <li><s>Yoda</s> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em></li>
+      <li><strike>RSpec</strike></li>
+      <li><strike>MiniTest::Spec</strike></li>
+      <li><strike>Yoda</strike> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em></li>
       <li>?</li>
     </ul>
   </li>
-  <li><s>Add a declarative API to customize the name of the function that wraps assertions</s></li>
+  <li><strike>Add a declarative API to customize the name of the function that wraps assertions</strike></li>
   <li>RDoc</li>
+  <li>Add a "detection mode" which rescues Cordon::Violation, records the backtrace, and reports all violations in a Kernel#at_exit callback.</li>
+  <li>MAYBE: Figure out how to raise Cordon::Violation only when in (or not in?) a certain calling context (this could be hairy), which might make #assert_that optional</li>
   <li>probably some other stuff I can't think of at the moment</li>
 </ul>
 
