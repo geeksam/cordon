@@ -50,7 +50,6 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
   - <s>Yoda</s> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em>
   - ?
 - <s>Add a declarative API to customize the name of the function that wraps assertions</s>
-- Move tests around; almost everything in test/unit/*_test.rb is actually an integration test (but there's something already named that)
 - probably some other stuff I can't think of at the moment
 
 
