@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'unit_helper')
+require File.join(File.dirname(__FILE__), 'integration_test_helper')
 
 module Kernel
   def should_probably(*_)

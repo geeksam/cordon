@@ -35,11 +35,11 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 namespace :test do
   desc 'Run all tests'
-  task :all => ['test:unit', 'test:framework_integration']
+  task :all => ['test:integration', 'test:framework_integration']
 
-  desc 'Run unit tests'
-  Rake::TestTask.new(:unit) do |t|
-    t.pattern = 'test/unit/*_test.rb'
+  desc 'Run integration tests'
+  Rake::TestTask.new(:integration) do |t|
+    t.pattern = 'test/integration/*_test.rb'
     t.verbose = true
   end
 
