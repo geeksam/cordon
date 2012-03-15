@@ -13,7 +13,7 @@ end
 # (It's not nearly as glamorous as the Bond movies would have you believe.)
 Cordon.watchlist Kernel, [:shady_method]
 
-class CordonBasicExamples < CordonUnitTest
+class MonitorModeExamples < CordonUnitTest
   def method_one
     shady_method; @method_one_line = __LINE__
   end
