@@ -11,7 +11,7 @@ From Wikipedia:
 
 I've never been a big fan of the way RSpec adds <code>#should</code> and <code>#should_not</code> to Kernel, but until recently I'd never been able to articulate why.  Then I worked on a project that became <a href="https://github.com/geeksam/kookaburra/">Kookaburra</a>, and I found a specific reason to be annoyed.
 
-Basically, putting <code>#should</code> on all objects gives you the freedom to <strike>shoot yourself in the foot</strike> put RSpec expectations *anywhere*, not just inside an <code>#it</code> block.  So, I went looking for a way to make <code>#should</code> explode if it was called outside a specific context.
+Basically, putting <code>#should</code> on all objects gives you the freedom to <strike>shoot yourself in the foot</strike>^H^H^H put RSpec expectations *anywhere*, not just inside an <code>#it</code> block.  So, I went looking for a way to make <code>#should</code> explode if it was called outside a specific context.
 
 After several false starts and horrible ideas, I've got something that actually isn't too bad.
 
