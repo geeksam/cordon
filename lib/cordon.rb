@@ -28,15 +28,12 @@ end
 module Cordon
   # Shorthand for blacklisting the undesirable methods in specific frameworks
   def self.embargo(framework)
-    case framework
-    when :rspec
-      blacklist Kernel, [:should, :should_not]
-    when :minitest_spec
-      must_and_wont = MiniTest::Expectations.instance_methods.map(&:to_s).select {|e| e =~ /^(must|wont)_/}
-      blacklist MiniTest::Expectations, must_and_wont
-    else
-      raise "I don't know how to embargo #{framework}!"
-    end
+    wrap_framework(framework, :blacklist)
+  end
+
+  # Shorthand for watchlisting the undesirable methods in specific frameworks
+  def self.monitor(framework)
+    wrap_framework(framework, :watchlist)
   end
 
   # Declare specific methods as off-limits so that invocations raise an exception
@@ -76,4 +73,29 @@ module Cordon
   def self.dont_filter_violation_backtrace!
     Violation.clear_custom_backtrace_filters
   end
+
+protected
+
+  def self.wrap_framework(framework, technique)
+    raise "Don't know how to wrap framework with #{technique.inspect}!" unless [:blacklist, :watchlist].include?(technique)
+
+    # Figure out which methods to wrap
+    list = []
+    case framework
+    when :rspec
+      list << [Kernel, [:should, :should_not]]
+    when :minitest_spec
+      must_and_wont = MiniTest::Expectations.instance_methods.map(&:to_s).select {|e| e =~ /^(must|wont)_/}
+      list << [MiniTest::Expectations, must_and_wont]
+    else
+      raise "I don't know how to embargo #{framework}!"
+    end
+
+    # Wrap them using the appropriate technique
+    # (which should be either :blacklist or :watchlist)
+    list.each do |subject, methods|
+      send technique, subject, methods
+    end
+  end
+
 end
