@@ -13,7 +13,7 @@ end
 # (It's not nearly as glamorous as the Bond movies would have you believe.)
 Cordon.watchlist Kernel, [:shady_method]
 
-class MonitorModeExamples < CordonUnitTest
+class WatchlistTest < CordonUnitTest
   def method_one
     shady_method; @method_one_line = __LINE__
   end
@@ -65,13 +65,13 @@ class MonitorModeExamples < CordonUnitTest
     # NOTE: using assert_match prints a weird MiniTest error
 
     # First line should be the actual invocation of #shady_method
-    assert i1.backtrace[0] =~ /monitor_mode_test.rb:#{@method_one_line}:in `method_one'$/, i1.backtrace[0]
-    assert i2.backtrace[0] =~ /monitor_mode_test.rb:#{@method_one_line}:in `method_one'$/, i2.backtrace[0]
-    assert i3.backtrace[0] =~ /monitor_mode_test.rb:#{@method_two_line}:in `method_two'$/, i3.backtrace[0]
+    assert i1.backtrace[0] =~ /watchlist_test.rb:#{@method_one_line}:in `method_one'$/, i1.backtrace[0]
+    assert i2.backtrace[0] =~ /watchlist_test.rb:#{@method_one_line}:in `method_one'$/, i2.backtrace[0]
+    assert i3.backtrace[0] =~ /watchlist_test.rb:#{@method_two_line}:in `method_two'$/, i3.backtrace[0]
 
     # Second line should be the place where method_(one|two) was called
-    assert i1.backtrace[1] =~ /monitor_mode_test.rb:#{invocation_1_line}:in `test_shady_calls_are_logged'$/, i1.backtrace[1]
-    assert i2.backtrace[1] =~ /monitor_mode_test.rb:#{invocation_2_line}:in `test_shady_calls_are_logged'$/, i2.backtrace[1]
-    assert i3.backtrace[1] =~ /monitor_mode_test.rb:#{invocation_3_line}:in `test_shady_calls_are_logged'$/, i3.backtrace[1]
+    assert i1.backtrace[1] =~ /watchlist_test.rb:#{invocation_1_line}:in `test_shady_calls_are_logged'$/, i1.backtrace[1]
+    assert i2.backtrace[1] =~ /watchlist_test.rb:#{invocation_2_line}:in `test_shady_calls_are_logged'$/, i2.backtrace[1]
+    assert i3.backtrace[1] =~ /watchlist_test.rb:#{invocation_3_line}:in `test_shady_calls_are_logged'$/, i3.backtrace[1]
   end
 end
