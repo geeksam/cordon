@@ -49,4 +49,12 @@ module Cordon
   def self.wrap_assertions_with(custom_method_name)
     Sanitaire.wrap_assertions_with(custom_method_name)
   end
+
+  def self.filter_violation_backtrace(&proc)
+    Violation.add_custom_backtrace_filter(&proc)
+  end
+
+  def self.dont_filter_violation_backtrace!
+    Violation.clear_custom_backtrace_filters
+  end
 end
