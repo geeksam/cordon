@@ -15,6 +15,8 @@ module Cordon
 
     def __cordon__call_method__(subject, method, *args, &b)
       case
+      when Watchlist.includes?(subject, method)
+        ::Cordon::Watchlist.invoke_method(self, subject, method, *args, &b)
       when Whitelist.admits?(self)
         ::Cordon::Blacklist.invoke_method(self, subject, method, *args, &b)
       else

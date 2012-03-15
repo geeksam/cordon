@@ -33,6 +33,17 @@ module Cordon
     end
   end
 
+  # Declare specific methods as off-limits
+  def self.watchlist(subject, methods)
+    methods.each do |method|
+      Watchlist.watchlist_method(subject, method.to_sym)
+    end
+  end
+
+  def self.incursions
+    Watchlist.incursions
+  end
+
   # Shorthand for blacklisting the undesirable methods in specific frameworks
   def self.embargo(framework)
     case framework
