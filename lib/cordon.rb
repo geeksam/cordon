@@ -28,16 +28,12 @@ end
 module Cordon
   # Declare specific methods as off-limits
   def self.blacklist(subject, methods)
-    methods.each do |method|
-      Blacklist.blacklist_method(subject, method.to_sym)
-    end
+    Blacklist.wrap_methods(subject, methods)
   end
 
   # Declare specific methods as off-limits
   def self.watchlist(subject, methods)
-    methods.each do |method|
-      Watchlist.watchlist_method(subject, method.to_sym)
-    end
+    Watchlist.wrap_methods(subject, methods)
   end
 
   def self.incursions
