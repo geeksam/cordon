@@ -11,6 +11,14 @@ module Cordon
       CustomFilterProcs.clear
     end
 
+    def self.from_invocation(subject, method, args)
+      method_descriptor = '%s#%s' % [subject, method]
+      message = '%s(%s)' % [method_descriptor, args.map(&:inspect).join(', ')]
+      new(message).tap { |e| e.method_descriptor = method_descriptor }
+    end
+
+    attr_accessor :method_descriptor
+
     def backtrace
       bt = super
       return if bt.nil?

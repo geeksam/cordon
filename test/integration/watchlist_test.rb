@@ -6,12 +6,16 @@ module Kernel
     # we are a hedge. move along.
     $shady_method_call_count += 1
   end
+
+  def dubious_method
+    # nothing to see here either
+  end
 end
 
 # In addition to blacklisting methods, Cordon can also place them on a watchlist.
 # This will track invocations for later reporting.
 # (It's not nearly as glamorous as the Bond movies would have you believe.)
-Cordon.watchlist Kernel, [:shady_method]
+Cordon.watchlist Kernel, [:shady_method, :dubious_method]
 
 class WatchlistTest < CordonUnitTest
   def method_one
@@ -20,8 +24,12 @@ class WatchlistTest < CordonUnitTest
   def method_two
     shady_method; @method_two_line = __LINE__
   end
+  def method_three
+    dubious_method; @method_three_line = __LINE__
+  end
 
   def setup
+    $shady_method_call_count = 0
     Cordon.filter_violation_backtrace do |backtrace|
       current_file = File.expand_path(__FILE__)
       in_file = Regexp.new(current_file)
@@ -73,5 +81,23 @@ class WatchlistTest < CordonUnitTest
     assert i1.backtrace[1] =~ /watchlist_test.rb:#{invocation_1_line}:in `test_shady_calls_are_logged'$/, i1.backtrace[1]
     assert i2.backtrace[1] =~ /watchlist_test.rb:#{invocation_2_line}:in `test_shady_calls_are_logged'$/, i2.backtrace[1]
     assert i3.backtrace[1] =~ /watchlist_test.rb:#{invocation_3_line}:in `test_shady_calls_are_logged'$/, i3.backtrace[1]
+  end
+
+  def test_incursion_report
+    method_one
+    method_two
+    method_one
+    method_two
+    method_three
+
+    report = Cordon.incursion_report
+
+    assert report =~ /Kernel#shady_method/
+    assert report =~ /Kernel#dubious_method/
+
+    assert report =~ /watchlist_test.rb:#{@method_one_line}:in `method_one'$/
+    assert report =~ /watchlist_test.rb:#{@method_one_line}:in `method_one'$/
+    assert report =~ /watchlist_test.rb:#{@method_two_line}:in `method_two'$/
+    assert report =~ /watchlist_test.rb:#{@method_three_line}:in `method_three'$/
   end
 end

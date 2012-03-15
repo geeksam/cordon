@@ -59,6 +59,11 @@ module Cordon
     Watchlist.incursions
   end
 
+  # Plain-text report of watchlist incursions
+  def self.incursion_report
+    Watchlist.incursion_report
+  end
+
   # Allow custom filtering of backtraces on Cordon::Violation errors.
   # Pass this a block that takes a backtrace and returns a backtrace.
   # Multiple filters can be defined; all will be applied.

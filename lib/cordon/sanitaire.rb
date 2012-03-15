@@ -20,8 +20,7 @@ module Cordon
       when Whitelist.admits?(self)
         ::Cordon::Blacklist.invoke_method(self, subject, method, *args, &b)
       else
-        message = '%s#%s(%s)' % [subject, method, args.map(&:inspect).join(', ')]
-        raise ::Cordon::Violation, message
+        raise ::Cordon::Violation.from_invocation(subject, method, args)
       end
     end
   end
