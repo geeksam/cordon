@@ -7,7 +7,7 @@ module Cordon
 
       # Unbind the original method, and replace it with a wrapper that
       # checks for permission before binding and calling the original
-      Blacklist.unbind_method(subject, method)
+      unbind_method(subject, method)
       subject.__cordon__wrap_method__(method)
     end
 
