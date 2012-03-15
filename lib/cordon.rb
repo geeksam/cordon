@@ -26,20 +26,6 @@ end
 
 
 module Cordon
-  # Declare specific methods as off-limits
-  def self.blacklist(subject, methods)
-    Blacklist.wrap_methods(subject, methods)
-  end
-
-  # Declare specific methods as off-limits
-  def self.watchlist(subject, methods)
-    Watchlist.wrap_methods(subject, methods)
-  end
-
-  def self.incursions
-    Watchlist.incursions
-  end
-
   # Shorthand for blacklisting the undesirable methods in specific frameworks
   def self.embargo(framework)
     case framework
@@ -53,14 +39,35 @@ module Cordon
     end
   end
 
+  # Declare specific methods as off-limits so that invocations raise an exception
+  def self.blacklist(subject, methods)
+    Blacklist.wrap_methods(subject, methods)
+  end
+
+  # Declare specific methods as off-limits so that invocations are logged
+  def self.watchlist(subject, methods)
+    Watchlist.wrap_methods(subject, methods)
+  end
+
+  # Allow user-defined aliases of #assert_that
   def self.wrap_assertions_with(custom_method_name)
     Sanitaire.wrap_assertions_with(custom_method_name)
   end
 
+  # Convenience accessor for reporting on watchlist incursions
+  def self.incursions
+    Watchlist.incursions
+  end
+
+  # Allow custom filtering of backtraces on Cordon::Violation errors.
+  # Pass this a block that takes a backtrace and returns a backtrace.
+  # Multiple filters can be defined; all will be applied.
   def self.filter_violation_backtrace(&proc)
     Violation.add_custom_backtrace_filter(&proc)
   end
 
+  # Reset custom filtering of backtraces.
+  # (This is mostly here for ease of testing.)
   def self.dont_filter_violation_backtrace!
     Violation.clear_custom_backtrace_filters
   end
