@@ -57,7 +57,7 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
   </li>
   <li><strike>Add a declarative API to customize the name of the function that wraps assertions</strike></li>
   <li>RDoc</li>
-  <li>Add a "detection mode" which rescues Cordon::Violation, records the backtrace, and reports all violations in a Kernel#at_exit callback.</li>
+  <li>Add a "detection mode" which rescues Cordon::Violation, records the backtrace, and reports all violations in a Kernel#at_exit callback. (UPDATE:  added Cordon.monitor for frameworks, and Cordon.watchlist for methods, but didn't get #at_exit working yet.)</li>
   <li>MAYBE: Figure out how to raise Cordon::Violation only when in (or not in?) a certain calling context (this could be hairy), which might make #assert_that optional</li>
   <li>probably some other stuff I can't think of at the moment</li>
 </ul>

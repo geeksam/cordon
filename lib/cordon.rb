@@ -32,6 +32,8 @@ module Cordon
   end
 
   # Shorthand for watchlisting the undesirable methods in specific frameworks
+  # NOTE:  while this will record incursions, you'll have to call Cordon.incursion_report
+  # yourself until I figure out how to make it print out at exit.
   def self.monitor(framework)
     wrap_framework(framework, :watchlist)
   end
