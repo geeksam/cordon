@@ -14,8 +14,13 @@ module Cordon
   protected
 
     def __cordon__call_method__(subject, method, *args, &b)
-      ::Cordon::Whitelist.check_permissions(self, subject, method, *args)
-      ::Cordon::Blacklist.invoke_method(self, subject, method, *args, &b)
+      case
+      when Whitelist.admits?(self)
+        ::Cordon::Blacklist.invoke_method(self, subject, method, *args, &b)
+      else
+        message = '%s#%s(%s)' % [subject, method, args.map(&:inspect).join(', ')]
+        raise ::Cordon::Violation, message
+      end
     end
   end
 end
