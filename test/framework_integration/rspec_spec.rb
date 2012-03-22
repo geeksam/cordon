@@ -17,3 +17,23 @@ describe "RSpec integration" do
     end
   end
 end
+
+describe "RSpec in 'relaxed mode'" do
+  subject { 42 }
+
+  before(:all) do
+    Cordon.relaxed_mode!
+  end
+  after(:all) do
+    Cordon.strict_mode!
+  end
+
+  it "lets you get away with using #should and #should_not on the implicit receiver" do
+    should == 42
+    should_not == 6*9
+  end
+
+  it "lets you get away with using #should anywhere inside an #it block" do
+    pending "some sort of around filter, maybe?"
+  end
+end

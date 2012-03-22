@@ -3,6 +3,11 @@ require 'test/unit'
 
 module Kernel
   VerbotenMethodCallReachedKernel = Class.new(Exception)
+
+  def __debug_print__(*args)
+    return unless $debug
+    puts '', *args
+  end
 end
 
 class CordonUnitTest < Test::Unit::TestCase

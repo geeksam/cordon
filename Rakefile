@@ -48,12 +48,12 @@ namespace :test do
 
   namespace :framework do
     RSpec::Core::RakeTask.new(:rspec) do |t|
-      t.pattern = 'test/framework_integration/rspec_spec.rb'
+      t.pattern = 'test/framework_integration/rspec*_spec.rb'
       t.verbose = true
     end
 
     Rake::TestTask.new(:minitest_spec) do |t|
-      t.pattern = 'test/framework_integration/minitest_spec_spec.rb'
+      t.pattern = 'test/framework_integration/minitest_spec*_spec.rb'
       t.verbose = true
     end
   end

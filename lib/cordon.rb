@@ -38,6 +38,17 @@ module Cordon
     wrap_framework(framework, :watchlist)
   end
 
+  def self.mode
+    @mode ||= :strict
+  end
+  def self.relaxed_mode!
+    @mode = :relaxed
+  end
+  def self.strict_mode!
+    @mode = :strict
+  end
+
+
   # Declare specific methods as off-limits so that invocations raise an exception
   def self.blacklist(subject, methods)
     Blacklist.wrap_methods(subject, methods)
@@ -46,6 +57,10 @@ module Cordon
   # Declare specific methods as off-limits so that invocations are logged
   def self.watchlist(subject, methods)
     Watchlist.wrap_methods(subject, methods)
+  end
+
+  def self.add_to_dmz(subject, methods, options = {})
+    DMZ.wrap_methods(subject, methods, options)
   end
 
   # Allow user-defined aliases of #assert_that
@@ -82,21 +97,25 @@ protected
     raise "Don't know how to wrap framework with #{technique.inspect}!" unless [:blacklist, :watchlist].include?(technique)
 
     # Figure out which methods to wrap
-    list = []
+    protected_list, dmz_list = [], []
     case framework
     when :rspec
-      list << [Kernel, [:should, :should_not]]
+      protected_list << [Kernel, [:should, :should_not]]
+      dmz_list << [RSpec::Core::ExampleGroup, [:example, :it, :specify, :focused, :focus], :class_methods => true]
     when :minitest_spec
       must_and_wont = MiniTest::Expectations.instance_methods.map(&:to_s).select {|e| e =~ /^(must|wont)_/}
-      list << [MiniTest::Expectations, must_and_wont]
+      protected_list << [MiniTest::Expectations, must_and_wont]
     else
       raise "I don't know how to embargo #{framework}!"
     end
 
     # Wrap them using the appropriate technique
     # (which should be either :blacklist or :watchlist)
-    list.each do |subject, methods|
+    protected_list.each do |subject, methods|
       send technique, subject, methods
+    end
+    dmz_list.each do |subject, methods, options|
+      add_to_dmz subject, methods, options || {}
     end
   end
 
