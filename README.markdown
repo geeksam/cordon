@@ -44,17 +44,10 @@ In both examples, note that Cordon's <code>.embargo</code> method must be called
 
 ## TODO
 
+### Switch to RSpec 2.11 when it comes out: http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
+
 <!-- Apparently Markdown and HTML don't mix, because "* <strike>foo</strike>" doesn't work the way I thought it should -->
 <ul>
-  <li>
-    Write integration macros (and tests, obviously) for various spec frameworks:
-    <ul>
-      <li><strike>RSpec</strike></li>
-      <li><strike>MiniTest::Spec</strike></li>
-      <li><strike>Yoda</strike> <em>(Actually, Yoda appears to abuse Ruby syntax badly enough that it may not work with Cordon.)</em></li>
-      <li>?</li>
-    </ul>
-  </li>
   <li><strike>Add a declarative API to customize the name of the function that wraps assertions</strike></li>
   <li>RDoc</li>
   <li>Add a "detection mode" which rescues Cordon::Violation, records the backtrace, and reports all violations in a Kernel#at_exit callback. (UPDATE:  added Cordon.monitor for frameworks, and Cordon.watchlist for methods, but didn't get #at_exit working yet.)</li>
